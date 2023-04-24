@@ -7,6 +7,9 @@ export default {
     components: {
         PostList
     },
+    created(){
+        this.$store.dispatch("setPost",this.yazilar)
+    },
     data() {
         return {
             // yazilar: [
@@ -57,7 +60,7 @@ export default {
 
             ]
             })
-        },1000)
+        },0)//1000)
     }
 }
 </script>

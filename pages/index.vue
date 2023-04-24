@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PostList :yaziListesi="yazilar" />
+    <PostList :yaziListesi="fetchedPosts" />
   </div>
 </template>
 
@@ -14,6 +14,14 @@ export default {
   data() {
     return {
 
+    }
+  },
+  created() {
+    // this.$store.dispatch("setPosts", this.yazilar)
+  },
+  computed:{
+    fetchedPosts(){
+      return this.$store.getters.getPosts
     }
   },
   // asyncData(context,callback){
@@ -43,10 +51,44 @@ export default {
   //   },1000)
   // }
 
-  asyncData(context) {
+  // Promise kullanımı örneği
+  // asyncData(context) {
+  //   return new Promise((resolve, reject) => {
+  //     resolve({
+  //       yazilar: [
+  //         {
+  //           id: 421,
+  //           baslik: "Başlık 421",
+  //           altBaslik: "Alt Başlık 421",
+  //           yazar: "Yazar 421",
+  //         },
+  //         {
+  //           id: 22,
+  //           baslik: "Başlık 422",
+  //           altBaslik: "Alt Başlık 422",
+  //           yazar: "Yazar 422",
+  //         },
+  //         {
+  //           id: 423,
+  //           baslik: "Başlık 423",
+  //           altBaslik: "Alt Başlık 423",
+  //           yazar: "Yazar 423",
+  //         },
+  //       ]
+  //     })
+  //   }
+  //   )
+  //     .then(data=>{
+  //       return data
+  //     })
+  //     .catch(e=>{
+  //       context.error(e);
+  //     })
+  // }
+  fetch(context) {
     return new Promise((resolve, reject) => {
-      resolve({
-        yazilar: [
+      context.store.dispatch("setPosts",
+        [
           {
             id: 421,
             baslik: "Başlık 421",
@@ -66,17 +108,13 @@ export default {
             yazar: "Yazar 423",
           },
         ]
-      })
+      )
+      resolve();
     }
     )
-      .then(data=>{
-        return data
-      })
-      .catch(e=>{
+      .catch(e => {
         context.error(e);
       })
-
-
   }
 }
 </script>
