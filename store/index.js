@@ -2,11 +2,17 @@ import Vuex from "vuex";
 
 const createStore = ()=>{
     return new Vuex.Store({
-        namespaced: true,
+        //namespaced: true,
         state:{
-            fetchedPosts:[]
+            fetchedPosts:[],
+
         },
-        mutation:{
+        getters:{
+            getPosts(state){
+                return state.fetchedPosts
+            }
+        },
+        mutations:{
             setPosts(state, post){
                 state.fetchedPosts = post
             }
@@ -16,12 +22,6 @@ const createStore = ()=>{
                 vuexContext.commit("setPosts", posts)
             }
         },
-    
-        getters:{
-            getPosts(state){
-                return state.fetchedPosts
-            }
-        }
     }
     )
 }
